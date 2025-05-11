@@ -1,15 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import Footer from '@/components/Footer';
-import GigCard from '@/components/GigCard';
-import Notification from '@/components/Notification';
-import PortfolioCard from '@/components/PortfolioCard';
-import ProgressChart from '@/components/ProgressChart';
-import EscrowFlow from '@/components/EscrowFlow';
-import WhiteboardMock from '@/components/WhiteboardMock';
-import { mockGigs, mockProjects, mockFreelancers } from '@/lib/mockData';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 
