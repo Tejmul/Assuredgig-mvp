@@ -46,6 +46,8 @@ module.exports = {
         'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
         'float': '0 22px 40px rgba(0, 30, 41, 0.2)',
         'hover': '0 30px 60px rgba(0,230,255,0.18)',
+        'neo-subtle': '0 2px 8px 0 rgba(0,0,0,0.08), 0 1.5px 4px 0 rgba(0,0,0,0.06)',
+        'neo-pressed': 'inset 0 2px 8px 0 rgba(0,0,0,0.12)',
       },
       borderRadius: {
         'xl': '1rem',
