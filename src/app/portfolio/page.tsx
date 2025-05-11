@@ -9,8 +9,8 @@ import Image from 'next/image';
 const sampleFreelancer = {
   name: "Tejmul",
   title: "Frontend Developer",
-  avatar: "/api/placeholder/150/150",
-  coverImage: "/api/placeholder/1200/400",
+  avatar: "https://placehold.co/150x150",
+  coverImage: "https://placehold.co/1200x400",
   rating: 4.8,
   bio: "Passionate frontend developer specializing in creating beautiful, responsive and user-friendly web applications with React and Next.js.",
   skills: [
@@ -31,7 +31,7 @@ const sampleFreelancer = {
       id: 1,
       title: "E-commerce Platform",
       description: "Built a responsive e-commerce platform with React, Next.js, and Tailwind CSS.",
-      image: "/api/placeholder/600/400",
+      image: "https://placehold.co/600x400",
       tags: ["React", "Next.js", "Tailwind CSS", "Stripe"],
       link: "#"
     },
@@ -39,7 +39,7 @@ const sampleFreelancer = {
       id: 2,
       title: "Portfolio Website",
       description: "Designed a sleek portfolio for a client with modern animations and responsive layout.",
-      image: "/api/placeholder/600/400",
+      image: "https://placehold.co/600x400",
       tags: ["React", "Framer Motion", "Tailwind CSS"],
       link: "#"
     },
@@ -47,7 +47,7 @@ const sampleFreelancer = {
       id: 3,
       title: "Task Management App",
       description: "Developed a collaborative task management application with real-time updates.",
-      image: "/api/placeholder/600/400",
+      image: "https://placehold.co/600x400",
       tags: ["React", "Firebase", "Tailwind CSS"],
       link: "#"
     }
@@ -57,7 +57,7 @@ const sampleFreelancer = {
       id: 1,
       name: "Sarah Johnson",
       company: "DesignHub",
-      avatar: "/api/placeholder/60/60",
+      avatar: "https://placehold.co/60x60",
       text: "Tejmul delivered an outstanding website that exceeded our expectations. Great communication and attention to detail!",
       rating: 5
     },
@@ -65,7 +65,7 @@ const sampleFreelancer = {
       id: 2,
       name: "Michael Chen",
       company: "TechStart",
-      avatar: "/api/placeholder/60/60",
+      avatar: "https://placehold.co/60x60",
       text: "Working with Tejmul was a pleasure. Professional, prompt, and produced high-quality work.",
       rating: 5
     },
@@ -73,7 +73,7 @@ const sampleFreelancer = {
       id: 3,
       name: "Priya Patel",
       company: "EcoShop",
-      avatar: "/api/placeholder/60/60",
+      avatar: "https://placehold.co/60x60",
       text: "Our e-commerce site has never looked better. Tejmul understood our vision and executed it perfectly.",
       rating: 4
     }

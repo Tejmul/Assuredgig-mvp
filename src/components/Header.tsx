@@ -12,7 +12,7 @@ export default function Header() {
             { href: '/', label: 'Home' },
             { href: '/gigs', label: 'Gigs' },
             { href: '/portfolio', label: 'Portfolio' },
-            { href: '/dashboard', label: 'Dashboard' },
+            { href: '/contract', label: 'Contract' },
             { href: '/contact', label: 'Contact' },
           ].map(({ href, label }) => (
             <li key={href}>
