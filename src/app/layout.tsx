@@ -1,6 +1,14 @@
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import ClientLayout from '@/ui/shared/ClientLayout';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: 'Assured Gig - Freelance Marketplace',
+  description: 'Connect with top talent and opportunities in our premium freelance marketplace.',
+};
 
 export default function RootLayout({
   children,
@@ -9,10 +17,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+      <body className={`${inter.className} bg-dark-surface`}>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

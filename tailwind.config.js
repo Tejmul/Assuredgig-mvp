@@ -4,6 +4,7 @@ module.exports = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/ui/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -14,9 +15,9 @@ module.exports = {
           card: '#131926',
         },
         primary: {
-          DEFAULT: '#00e6ff', // Neon blue
-          light: '#5efcff',
-          dark: '#0097cc',
+          DEFAULT: '#00e6ff',
+          dark: '#155e75',
+          light: '#a7f3d0',
         },
         secondary: {
           DEFAULT: '#001E29',
@@ -24,7 +25,7 @@ module.exports = {
           dark: '#00141B',
         },
         accent: {
-          DEFAULT: '#ff00ea', // Neon magenta
+          DEFAULT: '#ff00ff',
           light: '#ff5efc',
           dark: '#cc00b8',
         },
@@ -60,6 +61,9 @@ module.exports = {
         'pulse-subtle': 'pulse-subtle 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'slide-up': 'slide-up 0.6s ease-out',
         'fade-in': 'fade-in 0.8s ease-out',
+        'gradient-x': 'gradient-x 15s ease infinite',
+        'gradient-y': 'gradient-y 15s ease infinite',
+        'gradient-xy': 'gradient-xy 15s ease infinite',
       },
       keyframes: {
         'float': {
@@ -78,12 +82,49 @@ module.exports = {
           '0%': { opacity: 0 },
           '100%': { opacity: 1 },
         },
+        'gradient-y': {
+          '0%, 100%': {
+            'background-size': '400% 400%',
+            'background-position': 'center top',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'center center',
+          },
+        },
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
+          },
+        },
+        'gradient-xy': {
+          '0%, 100%': {
+            'background-size': '400% 400%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
+          },
+        },
       },
       backdropBlur: {
         'xs': '2px',
       },
       backgroundImage: {
         'hero-gradient': 'radial-gradient(ellipse at 50% 0%, #00e6ff33 0%, #0a0f1a 80%)',
+      },
+      backgroundSize: {
+        'size-200': '200% 200%',
+      },
+      backgroundPosition: {
+        'pos-0': '0% 0%',
+        'pos-100': '100% 100%',
       },
     },
   },

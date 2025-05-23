@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight, ChevronDown, Bell, User, Briefcase, Calendar, ClipboardList, BarChart2, ShieldCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const howItWorksSteps = [
   {
@@ -46,50 +49,81 @@ const howItWorksSteps = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[url('/grid-pattern.svg')] bg-cover bg-center flex flex-col justify-center items-center relative px-2 sm:px-4 py-8 sm:py-16 max-w-full overflow-x-hidden">
+    <div className="min-h-screen bg-[url('/grid-pattern.svg')] bg-cover bg-center flex flex-col items-center relative px-2 sm:px-4 py-8 sm:py-16 max-w-full overflow-x-hidden">
       {/* Hero Section */}
-      <div className="flex flex-col items-center justify-center px-2 sm:px-6 text-center w-full max-w-full sm:max-w-2xl md:max-w-3xl mx-auto gap-y-8">
-        <h1 className="text-xl sm:text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight break-words">
-          The Future of
-          <span className="block text-primary">Freelancing</span>
-        </h1>
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 mt-4 mb-8">
-          Connect with top talent and opportunities in our premium freelance marketplace. Be a client, freelancer, or both - the choice is yours.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full justify-center mb-8">
-          <Link 
-            href="/post-job" 
-            className="w-full max-w-xs sm:max-w-none sm:w-auto bg-primary text-black px-4 sm:px-8 py-3 rounded-md flex items-center justify-center hover:bg-primary-light transition-colors font-semibold shadow-md"
+      <section className="flex flex-col items-center justify-center w-full min-h-[70vh] relative z-10">
+        {/* Glow/gradient background */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+          <div className="w-[600px] h-[300px] bg-cyan-400/10 blur-3xl rounded-full" />
+        </div>
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-center leading-tight mb-6 relative z-10"
+        >
+          <span className="block text-white drop-shadow-lg">The Future of</span>
+          <span className="block bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 text-transparent bg-clip-text drop-shadow-lg">
+            Freelancing
+          </span>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.7 }}
+          className="text-lg sm:text-xl text-gray-300 max-w-2xl text-center mb-10 z-10"
+        >
+          Connect with top talent and opportunities in our premium freelance marketplace.<br className="hidden sm:block" /> Be a client, freelancer, or both – the choice is yours.
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.7 }}
+          className="flex flex-col sm:flex-row gap-4 w-full justify-center z-10"
+        >
+          <Link
+            href="/post-job"
+            className="px-8 py-4 rounded-xl font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-black shadow-lg hover:from-cyan-300 hover:to-blue-300 transition-all duration-200 flex items-center justify-center text-lg"
           >
             Post a Job <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
-          <Link 
-            href="/find-work" 
-            className="w-full max-w-xs sm:max-w-none sm:w-auto bg-black text-white border border-gray-700 px-4 sm:px-8 py-3 rounded-md hover:bg-gray-900 transition-colors font-semibold shadow-md"
+          <Link
+            href="/find-work"
+            className="px-8 py-4 rounded-xl font-semibold bg-dark-surface text-cyan-300 border border-cyan-400 shadow-lg hover:bg-cyan-950/30 hover:text-cyan-100 transition-all duration-200 flex items-center justify-center text-lg"
           >
             Find Work
           </Link>
-        </div>
-      </div>
+        </motion.div>
+      </section>
 
       {/* How it Works Section */}
       <section className="w-full max-w-5xl mx-auto mt-12 mb-8 px-2 sm:px-0">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-white">How it Works</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {howItWorksSteps.map((step, idx) => (
-            <div key={idx} className="bg-black/60 rounded-xl p-6 flex flex-col items-center text-center shadow-lg border border-gray-800">
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              className="bg-black/60 rounded-xl p-6 flex flex-col items-center text-center shadow-lg border border-gray-800"
+            >
               {step.icon}
               <h3 className="text-lg font-semibold text-white mb-2">{step.title}</h3>
               <p className="text-gray-300 text-sm">{step.desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex justify-center">
-        <button className="text-gray-400 hover:text-white transition-colors animate-bounce">
+        <motion.button
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+          className="text-gray-400 hover:text-white transition-colors"
+        >
           <ChevronDown className="h-8 w-8" />
-        </button>
+        </motion.button>
       </div>
     </div>
   );
