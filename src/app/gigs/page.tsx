@@ -1,346 +1,201 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { Bell, Search } from 'lucide-react';
-import GigCard from './components/GigCard';
-import GigFilters from './components/GigFilters';
-import type { Gig } from './types/gig';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Search, Filter, Star, Clock, DollarSign, MapPin } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import MainLayout from '@/components/layout/MainLayout';
 
-// Sample gig data
-const INITIAL_GIGS: Gig[] = [
+const categories = [
+  'All Categories',
+  'Web Development',
+  'Mobile Development',
+  'Design',
+  'Writing',
+  'Marketing',
+  'Data Science',
+  'AI & Machine Learning'
+];
+
+const gigs = [
   {
-    id: 1,
-    title: "Build a React Website",
-    description: "Need a modern website built with React and Tailwind CSS.",
-    budget: 500,
-    duration: "2 weeks",
-    location: "Remote",
-    skills: ["FrontendDev", "React", "Tailwind"],
-    postedDate: "2025-05-08",
-    difficulty: "Intermediate",
-    category: "Web Development",
-    featured: true,
-    verified: true,
-    applicants: 7,
-    client: {
-      name: "TechSolutions Inc.",
-      rating: 4.8,
-      projectsPosted: 12
-    }
+    title: 'Senior React Developer',
+    company: 'TechCorp',
+    location: 'Remote',
+    type: 'Full-time',
+    salary: '$80k - $120k',
+    description: 'Looking for an experienced React developer to join our team...',
+    tags: ['React', 'TypeScript', 'Node.js'],
+    posted: '2 days ago',
+    rating: 4.8
   },
   {
-    id: 2,
-    title: "Logo Design",
-    description: "Create a unique logo for a startup.",
-    budget: 200,
-    duration: "1 week",
-    location: "Remote",
-    skills: ["GraphicDesign", "Logo"],
-    postedDate: "2025-05-10",
-    difficulty: "Beginner",
-    category: "Design",
-    featured: false,
-    verified: true,
-    applicants: 12,
-    client: {
-      name: "StartupBrand",
-      rating: 4.2,
-      projectsPosted: 3
-    }
+    title: 'UI/UX Designer',
+    company: 'DesignStudio',
+    location: 'New York',
+    type: 'Contract',
+    salary: '$60k - $90k',
+    description: 'Join our creative team as a UI/UX designer...',
+    tags: ['Figma', 'Adobe XD', 'UI Design'],
+    posted: '1 day ago',
+    rating: 4.9
   },
   {
-    id: 3,
-    title: "Mobile App Development",
-    description: "Develop a cross-platform mobile app using React Native.",
-    budget: 2000,
-    duration: "1 month",
-    location: "Remote",
-    skills: ["MobileDev", "ReactNative", "Firebase"],
-    postedDate: "2025-05-05",
-    difficulty: "Advanced",
-    category: "Mobile Development",
-    featured: true,
-    verified: true,
-    applicants: 5,
-    client: {
-      name: "AppWorks Ltd.",
-      rating: 4.9,
-      projectsPosted: 27
-    }
+    title: 'Backend Developer',
+    company: 'CloudTech',
+    location: 'Remote',
+    type: 'Full-time',
+    salary: '$90k - $130k',
+    description: 'Seeking a backend developer with strong Python skills...',
+    tags: ['Python', 'Django', 'AWS'],
+    posted: '3 days ago',
+    rating: 4.7
   },
   {
-    id: 4,
-    title: "WordPress Site Migration",
-    description: "Migrate existing WordPress site to a new host with performance optimization.",
-    budget: 300,
-    duration: "3 days",
-    location: "Remote",
-    skills: ["WordPress", "DevOps", "Optimization"],
-    postedDate: "2025-05-09",
-    difficulty: "Intermediate",
-    category: "Web Development",
-    featured: false,
-    verified: false,
-    applicants: 9,
-    client: {
-      name: "BlogMaster",
-      rating: 3.7,
-      projectsPosted: 5
-    }
-  },
-  {
-    id: 5,
-    title: "Content Writing for Tech Blog",
-    description: "Create engaging content for a technology blog with SEO optimization.",
-    budget: 150,
-    duration: "1 week",
-    location: "Remote",
-    skills: ["ContentWriting", "SEO", "TechKnowledge"],
-    postedDate: "2025-05-11",
-    difficulty: "Beginner",
-    category: "Content",
-    featured: false,
-    verified: true,
-    applicants: 18,
-    client: {
-      name: "TechInsights",
-      rating: 4.3,
-      projectsPosted: 31
-    }
-  },
-  {
-    id: 6,
-    title: "E-commerce UI/UX Redesign",
-    description: "Redesign the user interface for an existing e-commerce platform.",
-    budget: 800,
-    duration: "2 weeks",
-    location: "Remote",
-    skills: ["UI/UX", "Figma", "E-commerce"],
-    postedDate: "2025-05-07",
-    difficulty: "Intermediate",
-    category: "Design",
-    featured: true,
-    verified: true,
-    applicants: 11,
-    client: {
-      name: "ShopNow",
-      rating: 4.6,
-      projectsPosted: 8
-    }
+    title: 'Mobile App Developer',
+    company: 'AppWorks',
+    location: 'San Francisco',
+    type: 'Contract',
+    salary: '$70k - $100k',
+    description: 'Looking for a skilled mobile developer...',
+    tags: ['React Native', 'iOS', 'Android'],
+    posted: '1 week ago',
+    rating: 4.6
   }
 ];
 
-// Available filters
-const CATEGORIES = ["All Categories", "Web Development", "Design", "Mobile Development", "Content", "Marketing", "Data Science"];
-const DIFFICULTY_LEVELS = ["All Levels", "Beginner", "Intermediate", "Advanced"];
-const BUDGET_RANGES = ["Any Budget", "$0-$100", "$100-$500", "$500-$1000", "$1000-$5000", "$5000+"];
-const DURATION_RANGES = ["Any Duration", "Less than 1 week", "1-2 weeks", "2-4 weeks", "1-3 months", "3+ months"];
-
 export default function GigsPage() {
-  const [filteredGigs, setFilteredGigs] = useState<Gig[]>(INITIAL_GIGS);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("All Levels");
-  const [selectedBudget, setSelectedBudget] = useState("Any Budget");
-  const [selectedDuration, setSelectedDuration] = useState("Any Duration");
-  const [showFilters, setShowFilters] = useState(false);
-  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
-  const sortBy = "newest";
-  const [viewMode, setViewMode] = useState<"card" | "list">("card");
-  const [savedGigs, setSavedGigs] = useState<number[]>([]);
-  
-  // Filter gigs based on selected filters
-  useEffect(() => {
-    let results = [...INITIAL_GIGS];
-    
-    // Search filter
-    if (searchTerm) {
-      results = results.filter(gig => 
-        gig.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        gig.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        gig.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    }
-    
-    // Category filter
-    if (selectedCategory !== "All Categories") {
-      results = results.filter(gig => gig.category === selectedCategory);
-    }
-    
-    // Difficulty filter
-    if (selectedDifficulty !== "All Levels") {
-      results = results.filter(gig => gig.difficulty === selectedDifficulty);
-    }
-    
-    // Budget filter
-    if (selectedBudget !== "Any Budget") {
-      const budgetRange = selectedBudget.replace("$", "").split("-").map(b => parseInt(b.replace("+", "")));
-      
-      if (budgetRange.length === 2) {
-        results = results.filter(gig => 
-          gig.budget >= budgetRange[0] && 
-          (budgetRange[1] ? gig.budget <= budgetRange[1] : true)
-        );
-      }
-    }
-    
-    // Duration filter
-    if (selectedDuration !== "Any Duration") {
-      if (selectedDuration.includes("Less than")) {
-        results = results.filter(gig => gig.duration.includes("day") || 
-          (gig.duration.includes("week") && parseInt(gig.duration) < 1));
-      } else if (selectedDuration.includes("week")) {
-        results = results.filter(gig => gig.duration.includes("week"));
-      } else if (selectedDuration.includes("month")) {
-        results = results.filter(gig => gig.duration.includes("month"));
-      }
-    }
-    
-    // Sort results
-    if (sortBy === "newest") {
-      results.sort((a, b) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime());
-    } else if (sortBy === "budget-high") {
-      results.sort((a, b) => b.budget - a.budget);
-    } else if (sortBy === "budget-low") {
-      results.sort((a, b) => a.budget - b.budget);
-    } else if (sortBy === "featured") {
-      results.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-    }
-    
-    setFilteredGigs(results);
-  }, [searchTerm, selectedCategory, selectedDifficulty, selectedBudget, selectedDuration]);
-
-  const toggleSaveGig = (gigId: number) => {
-    if (savedGigs.includes(gigId)) {
-      setSavedGigs(savedGigs.filter(id => id !== gigId));
-    } else {
-      setSavedGigs([...savedGigs, gigId]);
-    }
-  };
-
-  const resetFilters = () => {
-    setSearchTerm("");
-    setSelectedCategory("All Categories");
-    setSelectedDifficulty("All Levels");
-    setSelectedBudget("Any Budget");
-    setSelectedDuration("Any Duration");
-    setShowAdvancedFilters(false);
-  };
+  const [selectedCategory, setSelectedCategory] = useState('All Categories');
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Page Header with Glow Effect */}
-      <div className="relative py-12 mb-6 overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-5xl font-bold text-center mb-2 text-cyan-400">
-            Available Gigs
-          </h1>
-          <p className="text-center text-lg text-gray-300 max-w-2xl mx-auto">
-            Find the perfect gig that matches your skills and expertise from our curated marketplace
-          </p>
+    <MainLayout>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-4xl mx-auto"
+          >
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+              Find Your Next Opportunity
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-400 mb-8">
+              Browse through our curated list of high-quality gigs and find the perfect match for your skills.
+            </p>
+          </motion.div>
         </div>
-        {/* Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-purple-500/20 blur-3xl opacity-30"></div>
-      </div>
+      </section>
 
-      {/* Notification Bar */}
-      <div className="bg-gray-800/60 backdrop-blur-sm py-3 mb-6">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Bell size={18} className="text-cyan-400" />
-              <h2 className="text-lg font-medium">Notifications</h2>
+      {/* Search and Filter Section */}
+      <section className="py-8 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Input
+                  placeholder="Search gigs..."
+                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-400"
+                />
+              </div>
             </div>
-            <div className="bg-gray-700/70 rounded-full px-3 py-1 text-sm text-gray-300">
-              5 new gigs match your skills
+            <div className="flex gap-4">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-[200px] bg-white/5 border-white/10 text-white">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+              </Button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4">
-        {/* Filters */}
-        <GigFilters
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          selectedDifficulty={selectedDifficulty}
-          setSelectedDifficulty={setSelectedDifficulty}
-          selectedBudget={selectedBudget}
-          setSelectedBudget={setSelectedBudget}
-          selectedDuration={selectedDuration}
-          setSelectedDuration={setSelectedDuration}
-          showFilters={showFilters}
-          setShowFilters={setShowFilters}
-          showAdvancedFilters={showAdvancedFilters}
-          setShowAdvancedFilters={setShowAdvancedFilters}
-          resetFilters={resetFilters}
-          categories={CATEGORIES}
-          difficultyLevels={DIFFICULTY_LEVELS}
-          budgetRanges={BUDGET_RANGES}
-          durationRanges={DURATION_RANGES}
-        />
-        
-        {/* Results Count & View Toggle */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="text-gray-300">
-            Showing <span className="font-semibold text-white">{filteredGigs.length}</span> results
-          </div>
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={() => setViewMode("card")}
-              className={`p-2 rounded-md ${viewMode === "card" ? "bg-gray-700 text-cyan-400" : "text-gray-400 hover:text-white"}`}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-              </svg>
-            </button>
-            <button
-              onClick={() => setViewMode("list")}
-              className={`p-2 rounded-md ${viewMode === "list" ? "bg-gray-700 text-cyan-400" : "text-gray-400 hover:text-white"}`}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="21" y1="6" x2="3" y2="6"></line>
-                <line x1="21" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="18" x2="3" y2="18"></line>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        {/* Gig Cards */}
-        {filteredGigs.length === 0 ? (
-          <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-12 text-center">
-            <div className="inline-flex justify-center items-center w-16 h-16 bg-gray-700 rounded-full mb-4">
-              <Search size={24} className="text-gray-400" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">No gigs found</h3>
-            <p className="text-gray-400 mb-6">Try adjusting your search filters or browse all categories</p>
-            <button 
-              onClick={resetFilters}
-              className="px-5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          <div className={`grid gap-6 ${viewMode === "card" ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}>
-            {filteredGigs.map((gig) => (
-              <GigCard
-                key={gig.id}
-                gig={gig}
-                viewMode={viewMode}
-                onSave={toggleSaveGig}
-                isSaved={savedGigs.includes(gig.id)}
-              />
+      {/* Gigs Grid */}
+      <section className="py-12 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6">
+            {gigs.map((gig, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-all">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-xl font-semibold text-white mb-2">{gig.title}</h3>
+                        <p className="text-gray-400">{gig.company}</p>
+                      </div>
+                      <div className="flex items-center text-yellow-400">
+                        <Star className="w-4 h-4 fill-current mr-1" />
+                        <span className="text-sm">{gig.rating}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {gig.tags.map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className="px-2 py-1 text-sm bg-white/5 rounded-full text-gray-300"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-gray-400 mb-4">
+                      <div className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        {gig.location}
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 mr-1" />
+                        {gig.posted}
+                      </div>
+                      <div className="flex items-center">
+                        <DollarSign className="w-4 h-4 mr-1" />
+                        {gig.salary}
+                      </div>
+                    </div>
+                    <p className="text-gray-400 mb-4">{gig.description}</p>
+                    <Button className="w-full bg-white text-black hover:bg-gray-200">
+                      Apply Now
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      </section>
+
+      {/* Load More Section */}
+      <section className="py-12 px-6">
+        <div className="max-w-7xl mx-auto text-center">
+          <Button
+            variant="outline"
+            className="border-white/20 text-white hover:bg-white/10"
+          >
+            Load More Gigs
+          </Button>
+        </div>
+      </section>
+    </MainLayout>
   );
 } 

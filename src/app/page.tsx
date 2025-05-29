@@ -1,130 +1,256 @@
 'use client';
 
-import Link from 'next/link';
-import { ArrowRight, ChevronDown, Bell, User, Briefcase, Calendar, ClipboardList, BarChart2, ShieldCheck } from 'lucide-react';
+import React from 'react';
 import { motion } from 'framer-motion';
+import { ArrowRight, CheckCircle2, Code, Globe, Shield, Zap } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import MainLayout from '@/components/layout/MainLayout';
 
-const howItWorksSteps = [
+const features = [
   {
-    icon: <Briefcase className="w-8 h-8 text-primary mb-2" />, 
-    title: 'Post a Gig',
-    desc: 'Clients post a gig (e.g., logo design) in seconds.'
+    icon: <Shield className="w-6 h-6" />,
+    title: 'Secure Payments',
+    description: 'Escrow-based payment system ensures your money is safe until work is completed.'
   },
   {
-    icon: <Bell className="w-8 h-8 text-primary mb-2" />,
-    title: 'Instant Notifications',
-    desc: 'Freelancers with matching skills get notified instantly.'
+    icon: <Code className="w-6 h-6" />,
+    title: 'Quality Assurance',
+    description: 'Rigorous vetting process ensures you work with top-tier freelancers.'
   },
   {
-    icon: <User className="w-8 h-8 text-primary mb-2" />,
-    title: 'Submit Portfolios',
-    desc: 'Freelancers submit their portfolios to apply.'
+    icon: <Globe className="w-6 h-6" />,
+    title: 'Global Talent',
+    description: 'Access a diverse pool of skilled professionals from around the world.'
   },
   {
-    icon: <ClipboardList className="w-8 h-8 text-primary mb-2" />,
-    title: 'Client Picks a Freelancer',
-    desc: 'Clients review applicants and select the best fit.'
+    icon: <Zap className="w-6 h-6" />,
+    title: 'Fast Delivery',
+    description: 'Efficient project management tools ensure timely delivery of your projects.'
+  }
+];
+
+const testimonials = [
+  {
+    content: "AssuredGig has transformed how we hire freelancers. The quality of talent and the security of payments make it our go-to platform.",
+    author: "Sarah Johnson",
+    role: "CTO, TechCorp"
   },
   {
-    icon: <Calendar className="w-8 h-8 text-primary mb-2" />,
-    title: 'Schedule a Meet',
-    desc: 'Schedule a video call and brainstorm with a whiteboard.'
-  },
-  {
-    icon: <ClipboardList className="w-8 h-8 text-primary mb-2" />,
-    title: 'Agree on Timeline',
-    desc: 'Both parties agree on milestones and deadlines.'
-  },
-  {
-    icon: <BarChart2 className="w-8 h-8 text-primary mb-2" />,
-    title: 'Real-Time Dashboard',
-    desc: 'Freelancer updates progress daily in a shared dashboard.'
-  },
-  {
-    icon: <ShieldCheck className="w-8 h-8 text-primary mb-2" />,
-    title: 'Escrow Payment & Delivery',
-    desc: 'Client pays via escrow. Files are delivered securely.'
-  },
+    content: "As a freelancer, I've found my best clients through AssuredGig. The platform is intuitive and the support team is amazing.",
+    author: "Michael Chen",
+    role: "Senior Developer"
+  }
 ];
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[url('/grid-pattern.svg')] bg-cover bg-center flex flex-col items-center relative px-2 sm:px-4 py-8 sm:py-16 max-w-full overflow-x-hidden">
+    <MainLayout>
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center w-full min-h-[70vh] relative z-10">
-        {/* Glow/gradient background */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <div className="w-[600px] h-[300px] bg-cyan-400/10 blur-3xl rounded-full" />
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-4xl mx-auto"
+          >
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+              Hire Top Freelancers with Confidence
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-400 mb-8">
+              Connect with verified professionals, manage projects seamlessly, and ensure secure payments all in one place.
+            </p>
+            <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+              <Button 
+                size="lg"
+                className="bg-white text-black hover:bg-gray-200"
+              >
+                Get Started <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                size="lg"
+                variant="outline"
+                className="border-white/20 text-white hover:bg-white/10"
+              >
+                Learn More
+              </Button>
+            </div>
+          </motion.div>
         </div>
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-center leading-tight mb-6 relative z-10"
-        >
-          <span className="block text-white drop-shadow-lg">The Future of</span>
-          <span className="block bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 text-transparent bg-clip-text drop-shadow-lg">
-            Freelancing
-          </span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.7 }}
-          className="text-lg sm:text-xl text-gray-300 max-w-2xl text-center mb-10 z-10"
-        >
-          Connect with top talent and opportunities in our premium freelance marketplace.<br className="hidden sm:block" /> Be a client, freelancer, or both – the choice is yours.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.7 }}
-          className="flex flex-col sm:flex-row gap-4 w-full justify-center z-10"
-        >
-          <Link
-            href="/post-job"
-            className="px-8 py-4 rounded-xl font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-black shadow-lg hover:from-cyan-300 hover:to-blue-300 transition-all duration-200 flex items-center justify-center text-lg"
-          >
-            Post a Job <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
-          <Link
-            href="/find-work"
-            className="px-8 py-4 rounded-xl font-semibold bg-dark-surface text-cyan-300 border border-cyan-400 shadow-lg hover:bg-cyan-950/30 hover:text-cyan-100 transition-all duration-200 flex items-center justify-center text-lg"
-          >
-            Find Work
-          </Link>
-        </motion.div>
       </section>
 
-      {/* How it Works Section */}
-      <section className="w-full max-w-5xl mx-auto mt-12 mb-8 px-2 sm:px-0">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-white">How it Works</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {howItWorksSteps.map((step, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="bg-black/60 rounded-xl p-6 flex flex-col items-center text-center shadow-lg border border-gray-800"
+      {/* Features Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              Why Choose AssuredGig?
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              We&apos;ve built the most secure and efficient platform for freelancers and clients.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-all">
+                  <CardContent className="p-6">
+                    <div className="text-white mb-4">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                    <p className="text-gray-400">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 px-6 bg-[#111111]">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              How It Works
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Get started in three simple steps
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                step: "01",
+                title: "Post Your Project",
+                description: "Describe your requirements and set your budget"
+              },
+              {
+                step: "02",
+                title: "Choose a Freelancer",
+                description: "Review proposals and select the best match"
+              },
+              {
+                step: "03",
+                title: "Get Your Work Done",
+                description: "Collaborate and receive your completed project"
+              }
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-white/5 border-white/10">
+                  <CardContent className="p-6">
+                    <div className="text-4xl font-bold text-white/20 mb-4">{step.step}</div>
+                    <h3 className="text-xl font-semibold text-white mb-2">{step.title}</h3>
+                    <p className="text-gray-400">{step.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              What Our Users Say
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Join thousands of satisfied clients and freelancers
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-white/5 border-white/10">
+                  <CardContent className="p-6">
+                    <div className="flex items-center mb-4">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400 mr-2" />
+                      <span className="text-emerald-400">Verified User</span>
+                    </div>
+                    <p className="text-gray-400 mb-6 leading-relaxed">
+                      &quot;{testimonial.content}&quot;
+                    </p>
+                    <div>
+                      <div className="font-semibold text-white">{testimonial.author}</div>
+                      <div className="text-gray-400 text-sm">{testimonial.role}</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-6 bg-[#111111]">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              Ready to Get Started?
+            </h2>
+            <p className="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+              Join thousands of clients and freelancers who trust AssuredGig for their projects.
+            </p>
+            <Button 
+              size="lg"
+              className="bg-white text-black hover:bg-gray-200"
             >
-              {step.icon}
-              <h3 className="text-lg font-semibold text-white mb-2">{step.title}</h3>
-              <p className="text-gray-300 text-sm">{step.desc}</p>
-            </motion.div>
-          ))}
+              Create Your Account <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </motion.div>
         </div>
       </section>
-
-      <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex justify-center">
-        <motion.button
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          className="text-gray-400 hover:text-white transition-colors"
-        >
-          <ChevronDown className="h-8 w-8" />
-        </motion.button>
-      </div>
-    </div>
+    </MainLayout>
   );
 }
