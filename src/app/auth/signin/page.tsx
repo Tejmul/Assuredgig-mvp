@@ -26,8 +26,8 @@ export default function SignIn() {
     try {
       await login(formData);
       router.push('/'); // Redirect to home page after successful login
-    } catch (err: any) {
-      setFormError(err?.error || 'Failed to sign in');
+    } catch (err: Error | unknown) {
+      setFormError(err instanceof Error ? err.message : 'Failed to sign in');
     }
   };
 
@@ -95,7 +95,7 @@ export default function SignIn() {
 
       <div className="mt-6 text-center">
         <p className="text-[#888888]">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link href="/auth/signup" className="text-[#5E6AD2] hover:text-[#4F5BC4]">
             Sign up
           </Link>

@@ -30,8 +30,8 @@ export default function SignUp() {
     try {
       await signUp(formData);
       router.push('/'); // Redirect to home page after successful signup
-    } catch (err: any) {
-      setFormError(err?.error || 'Failed to sign up');
+    } catch (err: Error | unknown) {
+      setFormError(err instanceof Error ? err.message : 'Failed to sign up');
     }
   };
 

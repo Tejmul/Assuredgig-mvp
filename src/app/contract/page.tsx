@@ -47,7 +47,7 @@ const contractTypes = [
 
 export default function ContractPage() {
   const [selectedType, setSelectedType] = useState('Fixed Price');
-
+  
   return (
     <MainLayout>
       {/* Hero Section */}
@@ -68,7 +68,7 @@ export default function ContractPage() {
           </motion.div>
         </div>
       </section>
-
+      
       {/* Contract Types Section */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
@@ -108,7 +108,7 @@ export default function ContractPage() {
           </div>
         </div>
       </section>
-
+      
       {/* Contract Form Section */}
       <section className="py-20 px-6 bg-[#111111]">
         <div className="max-w-3xl mx-auto">
@@ -150,8 +150,8 @@ export default function ContractPage() {
                           placeholder="Enter budget"
                           className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
                         />
-                      </div>
-                      <div>
+                            </div>
+                            <div>
                         <label className="block text-sm font-medium text-gray-300 mb-2">
                           Timeline
                         </label>
@@ -166,18 +166,18 @@ export default function ContractPage() {
                     <div className="flex items-center text-gray-400">
                       <Shield className="w-5 h-5 mr-2" />
                       <span className="text-sm">Your contract will be protected by our escrow system</span>
-                    </div>
+                </div>
                     <Button className="bg-white text-black hover:bg-gray-200">
                       Create Contract <Zap className="ml-2 w-4 h-4" />
                     </Button>
-                  </div>
+            </div>
                 </form>
               </CardContent>
             </Card>
           </motion.div>
-        </div>
+          </div>
       </section>
-
+          
       {/* Features Section */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
@@ -190,7 +190,7 @@ export default function ContractPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
               Why Use Our Contracts?
-            </h2>
+                </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               We&apos;ve built the most secure and efficient contract system for freelancers and clients.
             </p>
@@ -215,7 +215,7 @@ export default function ContractPage() {
               }
             ].map((feature, index) => (
               <motion.div
-                key={index}
+                    key={index} 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}

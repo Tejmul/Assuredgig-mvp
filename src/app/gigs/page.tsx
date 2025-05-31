@@ -1,12 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Filter, Star, Clock, DollarSign, MapPin } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import MainLayout from '@/components/layout/MainLayout';
+import { Gig3DCard } from '@/components/gigs/Gig3DCard';
 
 const categories = [
   'All Categories',
@@ -29,7 +29,8 @@ const gigs = [
     description: 'Looking for an experienced React developer to join our team...',
     tags: ['React', 'TypeScript', 'Node.js'],
     posted: '2 days ago',
-    rating: 4.8
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop'
   },
   {
     title: 'UI/UX Designer',
@@ -40,7 +41,8 @@ const gigs = [
     description: 'Join our creative team as a UI/UX designer...',
     tags: ['Figma', 'Adobe XD', 'UI Design'],
     posted: '1 day ago',
-    rating: 4.9
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2064&auto=format&fit=crop'
   },
   {
     title: 'Backend Developer',
@@ -51,7 +53,8 @@ const gigs = [
     description: 'Seeking a backend developer with strong Python skills...',
     tags: ['Python', 'Django', 'AWS'],
     posted: '3 days ago',
-    rating: 4.7
+    rating: 4.7,
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop'
   },
   {
     title: 'Mobile App Developer',
@@ -62,7 +65,8 @@ const gigs = [
     description: 'Looking for a skilled mobile developer...',
     tags: ['React Native', 'iOS', 'Android'],
     posted: '1 week ago',
-    rating: 4.6
+    rating: 4.6,
+    image: 'https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?q=80&w=2070&auto=format&fit=crop'
   }
 ];
 
@@ -82,10 +86,10 @@ export default function GigsPage() {
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
               Find Your Next Opportunity
-            </h1>
+          </h1>
             <p className="text-xl md:text-2xl text-gray-400 mb-8">
               Browse through our curated list of high-quality gigs and find the perfect match for your skills.
-            </p>
+          </p>
           </motion.div>
         </div>
       </section>
@@ -101,7 +105,7 @@ export default function GigsPage() {
                   placeholder="Search gigs..."
                   className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-400"
                 />
-              </div>
+      </div>
             </div>
             <div className="flex gap-4">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
@@ -137,52 +141,25 @@ export default function GigsPage() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-all">
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="text-xl font-semibold text-white mb-2">{gig.title}</h3>
-                        <p className="text-gray-400">{gig.company}</p>
-                      </div>
-                      <div className="flex items-center text-yellow-400">
-                        <Star className="w-4 h-4 fill-current mr-1" />
-                        <span className="text-sm">{gig.rating}</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {gig.tags.map((tag, tagIndex) => (
-                        <span
-                          key={tagIndex}
-                          className="px-2 py-1 text-sm bg-white/5 rounded-full text-gray-300"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-gray-400 mb-4">
-                      <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        {gig.location}
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 mr-1" />
-                        {gig.posted}
-                      </div>
-                      <div className="flex items-center">
-                        <DollarSign className="w-4 h-4 mr-1" />
-                        {gig.salary}
-                      </div>
-                    </div>
-                    <p className="text-gray-400 mb-4">{gig.description}</p>
-                    <Button className="w-full bg-white text-black hover:bg-gray-200">
-                      Apply Now
-                    </Button>
-                  </CardContent>
-                </Card>
+                <Gig3DCard
+                  title={gig.title}
+                  description={gig.description}
+                  image={gig.image}
+                  company={gig.company}
+                  tags={gig.tags}
+                  location={gig.location}
+                  salary={gig.salary}
+                  posted={gig.posted}
+                  rating={gig.rating}
+                  primaryActionLabel="Apply Now"
+                  onPrimaryAction={() => { /* handle apply */ }}
+                  secondaryActionLabel="Details"
+                  onSecondaryAction={() => { /* handle details */ }}
+                />
               </motion.div>
             ))}
           </div>
-        </div>
+      </div>
       </section>
 
       {/* Load More Section */}
@@ -194,7 +171,7 @@ export default function GigsPage() {
           >
             Load More Gigs
           </Button>
-        </div>
+    </div>
       </section>
     </MainLayout>
   );

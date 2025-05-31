@@ -17,9 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-dark-surface`}>
+      <body className={`${inter.className} bg-black text-white min-h-screen antialiased`}>
         <AuthProvider>
-          {children}
+          <div className="min-h-screen w-full flex flex-col bg-black transition-colors duration-300">
+            {children}
+          </div>
         </AuthProvider>
       </body>
     </html>

@@ -15,11 +15,18 @@ type User = {
   isVerified: boolean;
 };
 
+type SignUpData = {
+  email: string;
+  password: string;
+  fullName: string;
+  role: 'freelancer' | 'client';
+};
+
 type AuthContextType = {
   user: User | null;
   token: string | null;
   login: (credentials: { email: string; password: string }) => Promise<void>;
-  signUp: (userData: any) => Promise<void>;
+  signUp: (userData: SignUpData) => Promise<void>;
   logout: () => void;
   loading: boolean;
   error: string | null;
@@ -52,15 +59,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(userData);
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
-    } catch (err: any) {
-      setError(err?.response?.data?.error || 'Failed to login');
+    } catch (err: Error | unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to login';
+      setError(errorMessage);
       throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  const signUp = async (userData: any) => {
+  const signUp = async (userData: SignUpData) => {
     setLoading(true);
     setError(null);
     try {
@@ -69,8 +77,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(user);
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-    } catch (err: any) {
-      setError(err?.response?.data?.error || 'Failed to sign up');
+    } catch (err: Error | unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to sign up';
+      setError(errorMessage);
       throw err;
     } finally {
       setLoading(false);
