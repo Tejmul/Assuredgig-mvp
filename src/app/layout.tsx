@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { AuthProvider } from '@/context/AuthContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Assured Gig - Freelance Marketplace',
-  description: 'Connect with top talent and opportunities in our premium freelance marketplace.',
+  title: 'AssuredGig - Hire Top Freelancers with Confidence',
+  description: 'Connect with verified professionals, manage projects seamlessly, and ensure secure payments all in one place.',
 };
 
 export default function RootLayout({
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-dark-surface`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

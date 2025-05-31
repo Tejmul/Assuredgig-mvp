@@ -5,6 +5,7 @@ import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useRouter } from 'next/navigation';
 
 // Background pattern URL (properly encoded)
 const GRID_PATTERN = "data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 20 0 L 0 0 0 20' fill='none' stroke='%23374151' stroke-width='0.5'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E";
@@ -15,6 +16,7 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,12 +64,14 @@ export default function MainLayout({ children }: MainLayoutProps) {
               <Button 
                 variant="outline"
                 className="border-white/20 text-white hover:bg-white/10"
+                onClick={() => router.push('/auth/signin')}
               >
                 Sign In
               </Button>
               <Button 
                 variant="default" 
                 className="bg-white text-black hover:bg-gray-200"
+                onClick={() => router.push('/auth/signup')}
               >
                 Get Started
               </Button>
@@ -86,62 +90,49 @@ export default function MainLayout({ children }: MainLayoutProps) {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 py-12 border-t border-white/10 bg-[#0A0A0A]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-12">
-            <div className="col-span-2">
-              <div className="text-2xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent mb-4">
-                AssuredGig
-              </div>
-              <p className="text-gray-400 mb-6 max-w-md">
-                The modern platform for freelancers and clients to connect, collaborate, and create amazing projects together.
-              </p>
+      <footer className="relative bg-[#0A0A0A] border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4">AssuredGig</h3>
+              <p className="text-gray-400">Connecting talented freelancers with amazing opportunities.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold mb-4">Platform</h4>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-400 hover:text-white">How it Works</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white">Success Stories</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white">Pricing</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold mb-4">Company</h4>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-400 hover:text-white">About Us</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white">Careers</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold mb-4">Connect</h4>
               <div className="flex space-x-4">
-                {[
-                  { icon: <Github className="w-5 h-5" />, url: '#' },
-                  { icon: <Linkedin className="w-5 h-5" />, url: '#' },
-                  { icon: <Twitter className="w-5 h-5" />, url: '#' },
-                  { icon: <Mail className="w-5 h-5" />, url: '#' }
-                ].map((social, index) => (
-                  <Button
-                    key={index}
-                    variant="ghost"
-                    size="icon"
-                    className="bg-white/5 hover:bg-white/10 text-white"
-                    asChild
-                  >
-                    <a href={social.url}>{social.icon}</a>
-                  </Button>
-                ))}
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <Github className="w-5 h-5" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <Twitter className="w-5 h-5" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <Mail className="w-5 h-5" />
+                </a>
               </div>
-            </div>
-            <div>
-              <h3 className="text-white font-semibold mb-4">Platform</h3>
-              <ul className="space-y-2">
-                {['Features', 'Pricing', 'How it Works', 'Success Stories'].map((item) => (
-                  <li key={item}>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-white font-semibold mb-4">Company</h3>
-              <ul className="space-y-2">
-                {['About', 'Careers', 'Blog', 'Press'].map((item) => (
-                  <li key={item}>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-white/10 text-center text-gray-400">
-            © 2024 AssuredGig. All rights reserved. Built with Next.js & Tailwind CSS.
+            <p>&copy; {new Date().getFullYear()} AssuredGig. All rights reserved.</p>
           </div>
         </div>
       </footer>

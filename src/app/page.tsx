@@ -6,6 +6,7 @@ import { ArrowRight, CheckCircle2, Code, Globe, Shield, Zap } from 'lucide-react
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import MainLayout from '@/components/layout/MainLayout';
+import { useRouter } from 'next/navigation';
 
 const features = [
   {
@@ -44,6 +45,8 @@ const testimonials = [
 ];
 
 export default function HomePage() {
+  const router = useRouter();
+
   return (
     <MainLayout>
       {/* Hero Section */}
@@ -65,6 +68,7 @@ export default function HomePage() {
               <Button 
                 size="lg"
                 className="bg-white text-black hover:bg-gray-200"
+                onClick={() => router.push('/auth/signup')}
               >
                 Get Started <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
@@ -72,8 +76,9 @@ export default function HomePage() {
                 size="lg"
                 variant="outline"
                 className="border-white/20 text-white hover:bg-white/10"
+                onClick={() => router.push('/auth/signin')}
               >
-                Learn More
+                Sign In
               </Button>
             </div>
           </motion.div>
