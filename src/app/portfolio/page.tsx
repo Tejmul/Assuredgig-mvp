@@ -410,11 +410,11 @@ export default function PortfolioPage() {
                           ))}
                         </div>
                     <div className="flex space-x-4">
-                      <Button variant="link" className="text-accent hover:text-accent-dark p-0">
+                      <Button variant="ghost" className="text-accent hover:text-accent-dark p-0">
                         <ExternalLink className="w-4 h-4 mr-1" />
                         Live Demo
                       </Button>
-                      <Button variant="link" className="text-muted-foreground hover:text-accent p-0">
+                      <Button variant="ghost" className="text-accent hover:text-accent-dark p-0">
                         <Github className="w-4 h-4 mr-1" />
                         Code
                       </Button>
@@ -453,7 +453,7 @@ export default function PortfolioPage() {
                       <Button variant="ghost" size="icon" className="text-accent hover:text-accent-dark">
                         <ExternalLink className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-accent">
+                      <Button variant="ghost" size="icon" className="text-accent hover:text-accent-dark">
                         <Github className="w-4 h-4" />
                       </Button>
                     </div>
@@ -583,10 +583,8 @@ export default function PortfolioPage() {
                             variant="ghost"
                             size="icon"
                             className="bg-dark-border hover:bg-accent/10 text-accent"
-                            asChild
-                            aria-label={social.label}
                           >
-                            <a href={social.url}>{social.icon}</a>
+                            <a href={social.url} aria-label={social.label}>{social.icon}</a>
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>{social.label}</TooltipContent>

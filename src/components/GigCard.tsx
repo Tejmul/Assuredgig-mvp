@@ -1,13 +1,18 @@
 'use client';
 
 import { Gig } from '../lib/mockData';
+// @ts-ignore
 import { FaTag } from 'react-icons/fa';
+import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation';
 
 interface Props {
   gig: Gig;
 }
 
 export default function GigCard({ gig }: Props) {
+  const router = useRouter();
+
   return (
     <div className="bg-[#10151a] p-6 rounded-lg shadow-md hover:shadow-lg transition text-white">
       <h3 className="text-xl font-semibold text-cyan-700">{gig.title}</h3>
@@ -20,9 +25,12 @@ export default function GigCard({ gig }: Props) {
           </span>
         ))}
       </div>
-      <button className="mt-4 bg-cyan-600 text-white px-4 py-2 rounded hover:bg-cyan-700 transition">
+      <Button 
+        className="mt-4 bg-accent hover:bg-accent/90 text-white"
+        onClick={() => router.push(`/gigs/${gig.id}`)}
+      >
         View Details
-      </button>
+      </Button>
     </div>
   );
 }

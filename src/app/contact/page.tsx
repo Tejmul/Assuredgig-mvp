@@ -2,33 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, MessageSquare, Headphones } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Sparkles, MessageSquare, Headphones } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import MainLayout from '@/components/layout/MainLayout';
-
-const contactMethods = [
-  {
-    title: 'Email Us',
-    description: 'Get in touch with our support team',
-    icon: <Mail className="w-6 h-6" />,
-    value: 'support@assuredgig.com'
-  },
-  {
-    title: 'Call Us',
-    description: 'Speak with our team directly',
-    icon: <Phone className="w-6 h-6" />,
-    value: '+1 (555) 123-4567'
-  },
-  {
-    title: 'Visit Us',
-    description: 'Our office location',
-    icon: <MapPin className="w-6 h-6" />,
-    value: '123 Tech Street, San Francisco, CA 94107'
-  }
-];
+import { Card, CardContent } from "@/components/ui/card";
 
 const faqs = [
   {
@@ -47,112 +25,164 @@ const faqs = [
 
 export default function ContactPage() {
   return (
-    <MainLayout>
+    <div className="min-h-screen w-full bg-black flex flex-col">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative min-h-[60vh] bg-black">
+        {/* Background Effects */}
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black/40"></div>
+        
+        <div className="relative max-w-7xl mx-auto px-6 pt-32 pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-              Get in Touch
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 mb-8"
+            >
+              <Sparkles className="w-8 h-8 text-indigo-400" />
+            </motion.div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+              Get in
+              <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent"> Touch</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-400 mb-8">
-              Have questions? We&apos;re here to help. Reach out to our team and we&apos;ll get back to you as soon as possible.
+            
+            <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-8">
+              Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Methods Section */}
-      <section className="py-20 px-6">
+      {/* Contact Section */}
+      <section className="py-16 px-6 bg-black">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
-            {contactMethods.map((method, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="bg-white/5 border-white/10 hover:bg-white/10 transition-all">
-                  <CardContent className="p-6">
-                    <div className="text-white mb-4">
-                      {method.icon}
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-2">{method.title}</h3>
-                    <p className="text-gray-400 mb-2">{method.description}</p>
-                    <p className="text-white">{method.value}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="bg-[#161b22] border border-[#30363d] rounded-lg p-8"
+            >
+              <h2 className="text-2xl font-semibold text-white mb-6">Send us a Message</h2>
+              <form className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">
+                    Your Name
+                  </label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="John Doe"
+                    className="bg-[#0d1117] border-[#30363d] text-[#f0f6fc] placeholder:text-gray-400"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">
+                    Email Address
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john@example.com"
+                    className="bg-[#0d1117] border-[#30363d] text-[#f0f6fc] placeholder:text-gray-400"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">
+                    Message
+                  </label>
+                  <Textarea
+                    id="message"
+                    placeholder="Your message here..."
+                    className="min-h-[150px] bg-[#0d1117] border-[#30363d] text-[#f0f6fc] placeholder:text-gray-400"
+                  />
+                </div>
+                <Button className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white hover:opacity-90">
+                  <Send className="w-4 h-4 mr-2" />
+                  Send Message
+                </Button>
+              </form>
+            </motion.div>
 
-      {/* Contact Form Section */}
-      <section className="py-20 px-6 bg-[#111111]">
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-white/5 border-white/10">
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-semibold text-white mb-6">Send Us a Message</h2>
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        First Name
-                      </label>
-                      <Input
-                        placeholder="Enter your first name"
-                        className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-                      />
+            {/* Contact Information */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <div className="bg-[#161b22] border border-[#30363d] rounded-lg p-8">
+                <h2 className="text-2xl font-semibold text-white mb-6">Contact Information</h2>
+                <div className="space-y-6">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                        <Mail className="w-6 h-6 text-indigo-400" />
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Last Name
-                      </label>
-                      <Input
-                        placeholder="Enter your last name"
-                        className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-                      />
+                    <div className="ml-4">
+                      <h3 className="text-lg font-medium text-white">Email</h3>
+                      <p className="mt-1 text-gray-400">support@assuredgig.com</p>
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Email
-                    </label>
-                    <Input
-                      placeholder="Enter your email"
-                      className="bg-white/5 border-white/10 text-white placeholder:text-gray-400"
-                    />
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                        <Phone className="w-6 h-6 text-indigo-400" />
+                      </div>
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="text-lg font-medium text-white">Phone</h3>
+                      <p className="mt-1 text-gray-400">+1 (555) 123-4567</p>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Message
-                    </label>
-                    <Textarea
-                      placeholder="How can we help you?"
-                      className="bg-white/5 border-white/10 text-white placeholder:text-gray-400 min-h-[120px]"
-                    />
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                        <MapPin className="w-6 h-6 text-indigo-400" />
+                      </div>
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="text-lg font-medium text-white">Location</h3>
+                      <p className="mt-1 text-gray-400">
+                        123 Innovation Street<br />
+                        San Francisco, CA 94107
+                      </p>
+                    </div>
                   </div>
-                  <Button className="w-full bg-white text-black hover:bg-gray-200">
-                    Send Message <Send className="ml-2 w-4 h-4" />
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </motion.div>
+                </div>
+              </div>
+
+              {/* Business Hours */}
+              <div className="bg-[#161b22] border border-[#30363d] rounded-lg p-8">
+                <h2 className="text-2xl font-semibold text-white mb-6">Business Hours</h2>
+                <div className="space-y-4">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Monday - Friday</span>
+                    <span className="text-white">9:00 AM - 6:00 PM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Saturday</span>
+                    <span className="text-white">10:00 AM - 4:00 PM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Sunday</span>
+                    <span className="text-white">Closed</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -223,6 +253,15 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </section>
-    </MainLayout>
+
+      {/* Footer */}
+      <footer className="w-full bg-black border-t border-indigo-900/60 py-10 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center">
+          <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent mb-2">Assured Gig</span>
+          <span className="text-sm text-gray-500 mb-2">Empowering Freelancers & Clients</span>
+          <span className="text-xs text-gray-600">&copy; {new Date().getFullYear()} Assured Gig. All rights reserved.</span>
+        </div>
+      </footer>
+    </div>
   );
 }

@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
+import { ToastProvider } from '@/context/ToastContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AssuredGig - Hire Top Freelancers with Confidence',
-  description: 'Connect with verified professionals, manage projects seamlessly, and ensure secure payments all in one place.',
+  title: 'Assured Gig - Premium Freelancing Platform',
+  description: 'Connect with top freelancers and clients in a secure, premium environment.',
 };
 
 export default function RootLayout({
@@ -16,12 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-black text-white min-h-screen antialiased`}>
+    <html lang="en" className="dark">
+      <body className={`${inter.className} antialiased`}>
         <AuthProvider>
-          <div className="min-h-screen w-full flex flex-col bg-black transition-colors duration-300">
+          <ToastProvider>
             {children}
-          </div>
+          </ToastProvider>
         </AuthProvider>
       </body>
     </html>

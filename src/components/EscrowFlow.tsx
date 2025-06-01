@@ -1,5 +1,8 @@
 'use client';
 
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+
 export default function EscrowFlow() {
     const steps = [
       { step: 'Post Gig', description: 'Client posts the gig with details.' },
@@ -9,6 +12,8 @@ export default function EscrowFlow() {
       { step: 'Payment Sent', description: 'Client sends payment via platform.' },
       { step: 'Freelancer Paid', description: 'Platform transfers payment to freelancer.' },
     ];
+  
+    const router = useRouter();
   
     return (
       <section className="my-8">
@@ -25,9 +30,12 @@ export default function EscrowFlow() {
               </div>
             </div>
           ))}
-          <button className="mt-4 bg-cyan-600 text-white px-4 py-2 rounded hover:bg-cyan-700 transition">
-            Approve Work
-          </button>
+          <Button 
+            className="mt-4 bg-accent hover:bg-accent/90 text-white"
+            onClick={() => router.push('/contract')}
+          >
+            Start Escrow
+          </Button>
         </div>
       </section>
     );

@@ -1,109 +1,53 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { login as apiLogin, signUp as apiSignUp } from '@/lib/api';
+import React, { createContext, useContext, useState } from 'react';
 
-type User = {
+type Role = 'client' | 'freelancer';
+
+interface User {
   id: string;
-  email: string;
   fullName: string;
-  role: 'freelancer' | 'client';
-  profilePicture?: string;
-  bio?: string;
-  skills?: string[];
-  hourlyRate?: number;
-  isVerified: boolean;
-};
-
-type SignUpData = {
   email: string;
-  password: string;
-  fullName: string;
-  role: 'freelancer' | 'client';
-};
+  role: Role;
+}
 
-type AuthContextType = {
+interface AuthContextType {
   user: User | null;
-  token: string | null;
-  login: (credentials: { email: string; password: string }) => Promise<void>;
-  signUp: (userData: SignUpData) => Promise<void>;
+  register: (data: { fullName: string; email: string; password: string; role: Role }) => Promise<void>;
   logout: () => void;
-  loading: boolean;
-  error: string | null;
-};
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Check for stored auth data on mount
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
-  const login = async (credentials: { email: string; password: string }) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { token, ...userData } = await apiLogin(credentials);
-      setToken(token);
-      setUser(userData);
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(userData));
-    } catch (err: Error | unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to login';
-      setError(errorMessage);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const signUp = async (userData: SignUpData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { token, ...user } = await apiSignUp(userData);
-      setToken(token);
-      setUser(user);
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-    } catch (err: Error | unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to sign up';
-      setError(errorMessage);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
+  const register = async (data: { fullName: string; email: string; password: string; role: Role }) => {
+    // Create a mock user
+    const mockUser: User = {
+      id: Math.random().toString(36).substr(2, 9),
+      fullName: data.fullName,
+      email: data.email,
+      role: data.role
+    };
+    setUser(mockUser);
   };
 
   const logout = () => {
-    setToken(null);
     setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, signUp, logout, loading, error }}>
+    <AuthContext.Provider value={{ user, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
+export function useAuthContext() {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  if (context === undefined) {
+    throw new Error('useAuthContext must be used within an AuthProvider');
   }
   return context;
-}; 
+} 

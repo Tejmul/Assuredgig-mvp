@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, Menu, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { cn } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
 
@@ -14,6 +13,7 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -28,82 +28,28 @@ export default function MainLayout({ children }: MainLayoutProps) {
     <div className="min-h-screen bg-dark-surface text-white">
       {/* Navigation */}
       <nav className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-dark-border",
-        isScrolled ? "bg-dark-surface/90 backdrop-blur-md" : "bg-transparent"
+        "fixed top-0 w-full z-50 transition-all duration-300",
+        isScrolled ? "bg-dark-surface/80 backdrop-blur-md shadow-lg shadow-black/10" : "bg-transparent"
       )}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold bg-gradient-to-r from-white to-accent-dark bg-clip-text text-transparent select-none">
+          <div className="text-2xl font-bold bg-gradient-to-r from-white to-accent bg-clip-text text-transparent select-none cursor-pointer" onClick={() => router.push('/')}>
             AssuredGig
           </div>
-          <NavigationMenu>
-            <NavigationMenuList className="hidden md:flex items-center space-x-8">
-              <NavigationMenuItem>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <NavigationMenuLink
-                      className={cn(
-                        "text-sm font-medium transition-colors px-2 py-1 rounded-md",
-                        "text-gray-400 hover:text-accent hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                      )}
-                    >
-                      Product
-                    </NavigationMenuLink>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="mt-2 w-[480px] bg-dark-surface border border-dark-border rounded-xl p-6 grid grid-cols-2 gap-8">
-                    <div>
-                      <div className="text-xs text-muted-foreground mb-2">Core Features</div>
-                      <div className="mb-4">
-                        <div className="font-semibold text-white">Plan</div>
-                        <div className="text-sm text-muted-foreground">Set the product direction with projects and initiatives</div>
-                      </div>
-                      <div>
-                        <div className="font-semibold text-white">Build</div>
-                        <div className="text-sm text-muted-foreground">Make progress with issue tracking and cycle planning</div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-muted-foreground mb-2">More</div>
-                      <div className="mb-4">
-                        <div className="font-semibold text-white">Customer requests</div>
-                        <div className="text-sm text-muted-foreground">Manage user feedback</div>
-                      </div>
-                      <div className="mb-4">
-                        <div className="font-semibold text-white">Integrations</div>
-                        <div className="text-sm text-muted-foreground">Collaborate across tools</div>
-                      </div>
-                      <div className="mb-4">
-                        <div className="font-semibold text-white">Insights</div>
-                        <div className="text-sm text-muted-foreground">Realtime analytics</div>
-                      </div>
-                      <div className="mb-4">
-                        <div className="font-semibold text-white">Mobile app</div>
-                        <div className="text-sm text-muted-foreground">Linear in your pocket</div>
-                      </div>
-                      <div className="mb-4">
-                        <div className="font-semibold text-white">Linear Asks</div>
-                        <div className="text-sm text-muted-foreground">Workplace requests</div>
-                      </div>
-                      <div>
-                        <div className="font-semibold text-white">Linear for Agents</div>
-                        <div className="text-sm text-muted-foreground">Collaborate with AI teammates</div>
-                      </div>
-                    </div>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </NavigationMenuItem>
+          
+          {/* Desktop Navigation */}
+          <NavigationMenu className="hidden md:block">
+            <NavigationMenuList className="flex items-center space-x-8">
               {[
-                { name: 'Home', href: '/' },
-                { name: 'Gigs', href: '/gigs' },
-                { name: 'Contract', href: '/contract' },
-                { name: 'Contact', href: '/contact' }
+                { name: 'Find Work', href: '/gigs' },
+                { name: 'Post Jobs', href: '/post-job' },
+                { name: 'How it Works', href: '/how-it-works' }
               ].map((item) => (
                 <NavigationMenuItem key={item.name}>
                   <NavigationMenuLink
                     href={item.href}
                     className={cn(
                       "text-sm font-medium transition-colors px-2 py-1 rounded-md",
-                      "text-gray-400 hover:text-accent hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
-                      // Optionally: highlight active link
+                      "text-gray-400 hover:text-accent hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                     )}
                   >
                     {item.name}
@@ -112,28 +58,77 @@ export default function MainLayout({ children }: MainLayoutProps) {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
-          <div className="flex items-center space-x-4">
+
+          {/* Desktop Auth Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
             <Button 
-              variant="outline"
-              className="border-dark-border text-white hover:bg-accent/10 hover:text-accent"
+              variant="ghost"
+              className="text-gray-400 hover:text-accent hover:bg-accent/10"
               onClick={() => router.push('/auth/signin')}
             >
               Sign In
             </Button>
             <Button 
               variant="default" 
-              className="bg-accent text-white hover:bg-accent-dark shadow-accent"
-              onClick={() => router.push('/auth/signup')}
+              className="bg-accent text-white hover:bg-accent/90 shadow-lg shadow-accent/20"
+              onClick={() => router.push('/auth/register')}
             >
               Get Started
             </Button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden text-gray-400 hover:text-accent hover:bg-accent/10"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-dark-surface/95 backdrop-blur-md border-t border-dark-border">
+            <div className="px-4 py-3 space-y-1">
+              {[
+                { name: 'Find Work', href: '/gigs' },
+                { name: 'Post Jobs', href: '/post-job' },
+                { name: 'How it Works', href: '/how-it-works' }
+              ].map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-accent hover:bg-accent/10"
+                >
+                  {item.name}
+                </a>
+              ))}
+              <div className="pt-4 pb-3 border-t border-dark-border">
+                <Button 
+                  variant="ghost"
+                  className="w-full mb-2 text-gray-400 hover:text-accent hover:bg-accent/10"
+                  onClick={() => router.push('/auth/signin')}
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  variant="default" 
+                  className="w-full bg-accent text-white hover:bg-accent/90 shadow-lg shadow-accent/20"
+                  onClick={() => router.push('/auth/register')}
+                >
+                  Get Started
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Main Content */}
-      <main className="pt-24 pb-12 min-h-[80vh]">
-        <div className="max-w-7xl mx-auto px-6">
+      <main className="pt-24 pb-12 min-h-[80vh] w-full">
+        <div className="w-full flex flex-col items-center">
           {children}
         </div>
       </main>

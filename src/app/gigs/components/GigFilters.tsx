@@ -1,4 +1,5 @@
-import { Search, ChevronDown, Sliders } from 'lucide-react';
+import { Search, ChevronDown, Filter, ArrowUpDown } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 interface GigFiltersProps {
   searchTerm: string;
@@ -20,6 +21,11 @@ interface GigFiltersProps {
   difficultyLevels: string[];
   budgetRanges: string[];
   durationRanges: string[];
+  isFilterOpen: boolean;
+  setIsFilterOpen: (open: boolean) => void;
+  isSortOpen: boolean;
+  setIsSortOpen: (open: boolean) => void;
+  clearFilters: () => void;
 }
 
 export default function GigFilters({
@@ -34,7 +40,6 @@ export default function GigFilters({
   selectedDuration,
   setSelectedDuration,
   showFilters,
-  setShowFilters,
   showAdvancedFilters,
   setShowAdvancedFilters,
   resetFilters,
@@ -42,6 +47,11 @@ export default function GigFilters({
   difficultyLevels,
   budgetRanges,
   durationRanges,
+  isFilterOpen,
+  setIsFilterOpen,
+  isSortOpen,
+  setIsSortOpen,
+  clearFilters,
 }: GigFiltersProps) {
   return (
     <div className="mb-8">
@@ -93,13 +103,33 @@ export default function GigFilters({
         </div>
         
         {/* Filter Toggle Button */}
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center justify-center px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition-colors"
+        <Button
+          variant="secondary"
+          className="md:hidden flex items-center gap-2 border-dark-border text-white hover:bg-accent/10 hover:text-accent"
+          onClick={() => setIsFilterOpen(!isFilterOpen)}
         >
-          <Sliders size={18} className="mr-2 text-cyan-400" />
-          <span>Filters</span>
-        </button>
+          <Filter className="w-4 h-4" />
+          Filters
+        </Button>
+
+        {/* Sort Button */}
+        <Button
+          variant="secondary"
+          className="border-dark-border text-white hover:bg-accent/10 hover:text-accent"
+          onClick={() => setIsSortOpen(!isSortOpen)}
+        >
+          <ArrowUpDown className="w-4 h-4 mr-2" />
+          Sort
+        </Button>
+
+        {/* Clear Filters Button */}
+        <Button
+          variant="ghost"
+          className="text-muted-foreground hover:text-accent"
+          onClick={clearFilters}
+        >
+          Clear All
+        </Button>
       </div>
       
       {/* Advanced Filters Panel */}

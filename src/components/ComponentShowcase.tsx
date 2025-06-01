@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Bell, Search, ChevronRight, Star, Briefcase } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 export default function ComponentShowcase() {
   const [activeTab, setActiveTab] = useState('components');
@@ -11,26 +12,20 @@ export default function ComponentShowcase() {
       <div className="max-w-6xl mx-auto">
         {/* Tabs */}
         <div className="flex space-x-4 mb-8">
-          <button 
-            className={`px-4 py-2 rounded-xl transition-all duration-300 ${
-              activeTab === 'components' 
-                ? 'bg-primary text-white shadow-lg' 
-                : 'bg-white text-secondary shadow-neo-subtle'
-            }`}
+          <Button 
+            variant={activeTab === 'components' ? 'default' : 'secondary'}
+            className={activeTab === 'components' ? 'bg-accent hover:bg-accent/90' : ''}
             onClick={() => setActiveTab('components')}
           >
             Components
-          </button>
-          <button 
-            className={`px-4 py-2 rounded-xl transition-all duration-300 ${
-              activeTab === 'cards' 
-                ? 'bg-primary text-white shadow-lg' 
-                : 'bg-white text-secondary shadow-neo-subtle'
-            }`}
+          </Button>
+          <Button 
+            variant={activeTab === 'cards' ? 'default' : 'secondary'}
+            className={activeTab === 'cards' ? 'bg-accent hover:bg-accent/90' : ''}
             onClick={() => setActiveTab('cards')}
           >
             Cards
-          </button>
+          </Button>
         </div>
 
         {activeTab === 'components' && (
@@ -39,22 +34,26 @@ export default function ComponentShowcase() {
             <div className="bg-white p-8 rounded-2xl shadow-neo-flat">
               <h3 className="text-lg font-semibold mb-6">Buttons</h3>
               <div className="space-y-4">
-                <button className="w-full bg-primary text-white font-medium px-6 py-3 rounded-xl 
-                  shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden
-                  before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary before:to-primary-light 
-                  before:opacity-0 before:transition-opacity hover:before:opacity-100">
+                <Button
+                  variant="default"
+                  className="w-full bg-accent hover:bg-accent/90 text-white"
+                >
                   Primary Button
-                </button>
+                </Button>
                 
-                <button className="w-full bg-white text-primary border border-primary/20 font-medium px-6 py-3 rounded-xl
-                  shadow-neo-subtle hover:shadow-lg transition-all duration-300">
+                <Button
+                  variant="secondary"
+                  className="w-full border-accent text-accent hover:bg-accent/10"
+                >
                   Secondary Button
-                </button>
+                </Button>
                 
-                <button className="w-full bg-gradient-to-r from-accent to-accent-light text-white font-medium px-6 py-3 rounded-xl 
-                  shadow-lg hover:shadow-xl transition-all duration-300">
+                <Button
+                  variant="default"
+                  className="w-full bg-gradient-to-r from-accent to-accent-light text-white"
+                >
                   Accent Button
-                </button>
+                </Button>
               </div>
             </div>
             
