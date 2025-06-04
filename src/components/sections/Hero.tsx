@@ -51,7 +51,7 @@ export default function Hero() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
               <Link
-                href="/contracts"
+                href="/contract"
                 className="w-full sm:w-auto px-8 py-4 bg-white/10 text-white rounded-lg font-medium hover:bg-white/20 transition-all duration-200 flex items-center justify-center"
               >
                 View Contracts
