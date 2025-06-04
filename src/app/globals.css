@@ -361,3 +361,33 @@ html {
     linear-gradient(90deg, rgba(45, 49, 57, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee2 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 20s) linear infinite;
+}
+
+.animate-marquee2 {
+  animation: marquee2 var(--duration, 20s) linear infinite;
+}
+
+.animate-pause {
+  animation-play-state: paused;
+}

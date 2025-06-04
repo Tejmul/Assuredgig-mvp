@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 import { Send } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import BentoGridDemo from "@/components/bento-grid-demo";
+import BentoDemo from "@/components/bento-grid-demo";
 import CoverDemo from "@/components/cover-demo";
 
 // Base64 encoded avatar image (simple gray placeholder)
@@ -223,7 +223,7 @@ export default function PortfolioPage() {
           <h2 className="text-3xl md:text-5xl font-bold text-center mb-8 bg-gradient-to-r from-white to-accent-dark bg-clip-text text-transparent">
             Why Choose AssuredGig?
           </h2>
-          <BentoGridDemo />
+          <BentoDemo />
         </div>
         {/* Cover Demo at the bottom of the home section */}
         <div className="w-full flex justify-center items-center py-16 bg-black relative z-10">
