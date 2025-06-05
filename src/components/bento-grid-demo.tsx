@@ -104,7 +104,7 @@ const features = [
     ),
   },
   {
-    icon: <CalendarIcon className="w-8 h-8 hover:hidden lg:hover:hidden" />,
+    icon: <CalendarIcon className="w-8 h-8" />,
     title: "Calendar",
     description: "v2 launching soon",
     className: "col-span-3 lg:col-span-1",
