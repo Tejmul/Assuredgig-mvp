@@ -5,6 +5,7 @@ import { Search, Filter, Tag, MapPin, Clock, DollarSign, Sparkles } from 'lucide
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {useRouter} from 'next/navigation'
 
 const categories = [
   'All Categories',
@@ -77,6 +78,7 @@ const gigs = [
 export default function GigsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const navigate = useRouter()
 
   const toggleTag = (tag: string) => {
     setSelectedTags(prev => 
@@ -88,7 +90,16 @@ export default function GigsPage() {
 
   return (
     <div className="min-h-screen w-full bg-black flex flex-col">
-      {/* Hero Section */}
+      <Button
+          variant="secondary"
+          className="border-[#23272e] text-[#f0f6fc] hover:bg-[#23272e] w-40 fixed top-2 left-3 z-10"
+          onClick = {(e) => {
+            e.preventDefault();
+            navigate.push('/')
+          }}
+        >
+          Back To Home
+      </Button>
       <section className="relative min-h-[60vh] w-full">
         {/* Background Effects */}
         <div className="absolute inset-0 pointer-events-none">
@@ -253,7 +264,7 @@ export default function GigsPage() {
       </section>
 
       {/* Footer */}
-      <footer className="w-full bg-black border-t border-[#23272e] py-8 mt-auto">
+      <footer className="w-full bg-black border-t border-[#23272e] py-8 mt-auto flex gap-6">
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center">
           <span className="text-lg font-semibold text-white tracking-wide mb-2">Assured Gig</span>
           <span className="text-sm text-gray-500">&copy; {new Date().getFullYear()} Assured Gig. All rights reserved.</span>

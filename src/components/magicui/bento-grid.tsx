@@ -51,33 +51,23 @@ export const BentoCard = ({
         className
       )} onMouseEnter = {(e) => {
         e.preventDefault()
-        if (title === 'Calendar'){
           setisCalendar(true)
           setIscalicon(true)
           setIsdescription(true)
           return
-        }
-        return
       }} onMouseLeave = {(e) => {
         e.preventDefault()
-        if (title === 'Calendar'){
           setisCalendar(false)
           setIscalicon(false)
           setIsdescription(false)
           return
-        }
-        return
       }}>
       {/* Animated/visual background */}
-      {title === 'Calendar' ? (
+      {
         background && calicon && isCalendar && isdescription &&(
         <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
       )
-      ) : (
-        background && (
-        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
-      )
-      )}
+      }
       {background && calicon && isCalendar && isdescription &&(
         <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
       )}
