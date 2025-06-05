@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
-
+import { ReactNode , useState } from "react";
 export const BentoGrid = ({
   className,
   children,
@@ -20,7 +19,6 @@ export const BentoGrid = ({
     </div>
   );
 };
-
 export const BentoCard = ({
   className,
   icon,
@@ -40,6 +38,9 @@ export const BentoCard = ({
   cta?: string;
   children?: ReactNode;
 }) => {
+  const [isCalendar , setisCalendar] = useState(false)
+  const [calicon , setIscalicon] = useState(false)
+  const [isdescription , setIsdescription] = useState(false)
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -48,21 +49,47 @@ export const BentoCard = ({
       className={cn(
         "relative overflow-hidden rounded-3xl bg-black/60 dark:bg-black/60 shadow-2xl border border-white/10 backdrop-blur-xl flex flex-col justify-between p-10 min-h-[300px] group",
         className
-      )}
-    >
+      )} onMouseEnter = {(e) => {
+        e.preventDefault()
+        if (title === 'Calendar'){
+          setisCalendar(true)
+          setIscalicon(true)
+          setIsdescription(true)
+          return
+        }
+        return
+      }} onMouseLeave = {(e) => {
+        e.preventDefault()
+        if (title === 'Calendar'){
+          setisCalendar(false)
+          setIscalicon(false)
+          setIsdescription(false)
+          return
+        }
+        return
+      }}>
       {/* Animated/visual background */}
-      {background && (
+      {title === 'Calendar' ? (
+        background && calicon && isCalendar && isdescription &&(
+        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
+      )
+      ) : (
+        background && (
+        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
+      )
+      )}
+      {background && calicon && isCalendar && isdescription &&(
         <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
       )}
       {/* Card content */}
       <div className="relative z-10 flex flex-col h-full items-start">
-        {icon && (
+        {icon && !calicon && (
           <div className="mb-5 text-4xl text-white/80 dark:text-white/90">{icon}</div>
         )}
-        {title && (
+        {title && !isCalendar && (
           <h3 className="text-2xl font-extrabold mb-2 text-white leading-tight drop-shadow-lg">{title}</h3>
         )}
-        {description && (
+        {description && !isdescription && (
           <p className="text-base text-zinc-300 dark:text-zinc-300 mb-4 flex-1 leading-relaxed">{description}</p>
         )}
         {children}
