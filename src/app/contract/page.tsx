@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { FileText, Calendar, MessageSquare, CheckCircle2, Target, Award, Activity } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
+import {useRouter} from 'next/navigation'
 
 const contracts = [
   { id: 1, title: 'E-commerce Platform Development', client: 'TechCorp Inc.', progress: 68 },
@@ -153,10 +154,11 @@ const ProgressTimeline = ({ milestones }: { milestones: typeof contractDetails.m
 
 export default function ContractsPage() {
   const [selected, setSelected] = useState<number | null>(null);
+  const navigate = useRouter()
   return (
     <div className="min-h-screen w-full bg-black flex flex-col">
       <section className="w-full border-b border-[#23272e] py-10 bg-black">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="max-w-7xl mx-auto px-6 flex md:items-center md:justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center">
               <Target className="w-7 h-7 text-indigo-400" />
@@ -169,9 +171,9 @@ export default function ContractsPage() {
         </div>
       </section>
       <section className="py-16 px-6 w-full">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto grid gap-8">
           {/* Contracts List */}
-          <div className="md:col-span-2 flex flex-col gap-8">
+          <div className="md:col-span-2 flex-col gap-8 grid">
             <div className="bg-[#161b22] border border-[#23272e] rounded-2xl shadow-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <Target className="w-5 h-5 text-indigo-400" />
@@ -308,6 +310,15 @@ export default function ContractsPage() {
               <span className="font-black text-3xl text-white">12</span>
             </div>
           </div>
+          <div className = 'flex justify-end items-end'>
+            <Button variant="secondary" className="border-[#23272e] text-[#f0f6fc] hover:bg-[#23272e]"
+            onClick = {(e) => {
+              e.preventDefault()
+              navigate.push('/')
+            }}>
+              Go to Home
+            </Button>
+        </div>
         </div>
       </section>
     </div>

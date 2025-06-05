@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-
+import {useRouter} from 'next/navigation'
 const faqs = [
   {
     question: 'How do I get started as a freelancer?',
@@ -24,8 +24,19 @@ const faqs = [
 ];
 
 export default function ContactPage() {
+  const navigate = useRouter()
   return (
     <div className="min-h-screen w-full bg-black flex flex-col">
+      <Button
+                variant="secondary"
+                className="border-[#23272e] text-[#f0f6fc] hover:bg-[#23272e] w-40 fixed top-2 left-3 z-10"
+                onClick = {(e) => {
+                  e.preventDefault();
+                  navigate.push('/')
+                }}
+              >
+                Back To Home
+            </Button>
       {/* Hero Section */}
       <section className="relative min-h-[60vh] bg-black">
         {/* Background Effects */}

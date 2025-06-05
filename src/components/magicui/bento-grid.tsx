@@ -50,17 +50,16 @@ export const BentoCard = ({
         "relative overflow-hidden rounded-3xl bg-black/60 dark:bg-black/60 shadow-2xl border border-white/10 backdrop-blur-xl flex flex-col justify-between p-10 min-h-[300px] group",
         className
       )} onMouseEnter = {(e) => {
-        e.preventDefault()
-        if (title === 'Calendar'){
+        if (title === 'Calendar' || title === 'Integrate your social media accounts with your portfolio'){
+          e.preventDefault()
           setisCalendar(true)
           setIscalicon(true)
           setIsdescription(true)
           return
         }
-        return
       }} onMouseLeave = {(e) => {
-        e.preventDefault()
-        if (title === 'Calendar'){
+        if (title === 'Calendar' || title === 'Integrate your social media accounts with your portfolio'){
+          e.preventDefault()
           setisCalendar(false)
           setIscalicon(false)
           setIsdescription(false)
@@ -69,18 +68,11 @@ export const BentoCard = ({
         return
       }}>
       {/* Animated/visual background */}
-      {title === 'Calendar' ? (
-        background && calicon && isCalendar && isdescription &&(
+      { title === 'Calendar' || title === 'Integrate your social media accounts with your portfolio' ? (background && calicon && isCalendar && isdescription &&(
         <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
-      )
-      ) : (
-        background && (
+      )) : (background && !calicon && !isCalendar && !isdescription &&(
         <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
-      )
-      )}
-      {background && calicon && isCalendar && isdescription &&(
-        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">{background}</div>
-      )}
+      ))}
       {/* Card content */}
       <div className="relative z-10 flex flex-col h-full items-start">
         {icon && !calicon && (
